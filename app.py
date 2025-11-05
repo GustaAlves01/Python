@@ -2,8 +2,8 @@ import os, pyautogui as py
 from time import sleep
 #posição x y
 
-with open ("ra.txt","r") as ra:
-    ra = ra.read().strip
+with open("ra.txt","r") as log:
+    dados=(log.read().strip().split(","))
 
 
 def Entrar():
@@ -13,10 +13,18 @@ def Entrar():
 
 def Logar():
     with open("save.txt","r") as position:
-        cord=position.read().strip()
-    x,y = map(int, cord.split(","))
-    sleep(4)
+        x,y=map(int, position.read().strip().split(","))
+    sleep(3)
+    for _ in range(2):
+        py.click(x,y)
+    sleep(0,5)
+    for i in dados:
+        py.write(i)
+        py.press("tab")
+        sleep(0,5)
+    py.press("enter")
+     
 
-Logar()
-sleep(3)
 Entrar()
+sleep(3)
+Logar()
