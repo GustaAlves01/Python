@@ -1,18 +1,16 @@
-def Binary(arr,alvo):
-    high=len(arr)-1
-    low=0
-    while low<=high:
-        mid=(high+low)//2
-        guess=arr[mid]
-        if guess<alvo:
-            low=mid+1
-        elif guess>alvo:
-            high=mid-1
-        else:
-            return mid
-    return None
 
-lista=[21, 23, 24, 33, 35, 42, 47, 54, 67, 79, 82, 87, 92, 124, 126, 148, 149, 152, 160, 164, 175, 181, 183, 191, 193, 194, 218, 222, 231, 248, 251, 272, 273, 283, 284, 293, 294, 317, 322, 
-323, 348, 370, 380, 389, 417, 418, 419, 424, 428, 448, 453, 472, 476, 498, 501, 505, 509, 527, 528, 539, 544, 547, 558, 576, 577, 612, 620, 654, 678, 683, 685, 688, 694, 699, 711, 713, 715, 722, 744, 747, 759, 776, 782, 785, 807, 833, 844, 855, 887, 892, 893, 899, 919, 928, 932, 951, 970, 972, 978, 989, 999]
-print(lista)
-print(Binary(lista,164))
+def Sort(n):
+    arr = [1,2,3,4,5,6,7,8]
+    max=7
+    min=0
+    while min<=max:
+        mid=(max+min)//2
+        if arr[mid]>n:
+            max=mid-1
+        elif arr[mid]<n:
+            min=mid+1
+        else:
+            break
+    print(mid)
+
+Sort(1)
