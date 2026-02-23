@@ -1,5 +1,11 @@
 import requests
-res = requests.get("https://youtube.com")
-print(f"status:{res.status_code}")
-print(f"header:{res.headers}")
-print(f"content:{res.content}")
+from bs4 import BeautifulSoup as bs
+from time import sleep
+
+res = requests.get("https://g1.globo.com/")
+content = bs(res.content, "html.parser")
+noticia = content.find("div", class_="feed-post-body")
+titulo = noticia.find("p", elementtiming="text-ssr").text
+url = noticia.find("a", class_="feed-post-link gui-color-primary gui-color-hover").text
+print(f"titulo: {titulo} aaaa")
+print(url)
