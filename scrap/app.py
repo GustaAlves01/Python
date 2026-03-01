@@ -1,28 +1,37 @@
 import requests
 from bs4 import BeautifulSoup as bs
 
+def main():
+    for page in range(1,51):
+        site = f"https://books.toscrape.com/catalogue/page-{page}.html"
+        res = requests.get(site)
+        conection = res.status_code == 200
+        
+        if conection:
+            content = bs(res.content, "html.parser")
+            book_data(content, page)   
 
-for pagina in range(1,51):
-	site = f"https://books.toscrape.com/catalogue/page-{pagina}.html"
-	res = requests.get(site, timeout=10)
+        else:
+            print(f"conection failed at page {page}")
+            continue
 
-	if (res.status_code == 200):
-		content = bs(res.content, "html.parser")
-		livros = content.find_all("li", class_="col-xs-6 col-sm-4 col-md-3 col-lg-3")
 
-		for livro in livros:
-			titulo = livro.find("h3").text
-			preco = livro.find("p", class_="price_color").text
-			estoque = livro.find("p", class_="instock availability").text.strip()
-			estoque = "disponivel" if "In stock" in estoque else "indisponivel"
-			print(f"titulo: {titulo} \n"+
-			f"preco: {preco}\n"+
-			f"estoque: {estoque}")
-			print("-"*10)
+def book_data(content, page):
+    books = content.find_all("article", class_ = "product_pod")
 
-		print("="*10
-                 + f"\n pagina {pagina}\n"
-                 + "="*10)
+    for book in books:
 
-	else:
-		print("Nao conectado")
+        book_dicionary = {
+            "title": book.find("h3").find("a")['title'],
+            "price": book.find("p", class_="price_color").text,
+            "stock": book.find("p", class_="instock availability").text.strip()
+        }
+        print(f"title: {book_dicionary['title']}\n"+
+              f"price: {book_dicionary['price']}\n"+
+              f"stock: {book_dicionary['stock']}\n"+
+              "-"*10)
+
+    print (f"page: {page}")    
+
+if __name__ == "__main__":
+    main()
